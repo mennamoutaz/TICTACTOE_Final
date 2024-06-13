@@ -16,15 +16,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up CMake
-        uses: jwlawson/actions-setup-cmake@v1
-
       - name: Install dependencies
-        run: sudo apt-get install -y cmake g++ libgtest-dev
+        run: sudo apt-get install -y g++ libsqlite3-dev
 
       - name: Build project
         run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
+          mkdir -p build
+          g++ -o build/my_project src/*.cpp -l sqlite3 -I include
+
+      - name: Run tests
+        run: |
+          ./build/my_project
