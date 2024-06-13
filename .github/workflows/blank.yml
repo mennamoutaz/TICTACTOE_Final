@@ -22,7 +22,7 @@ jobs:
       - name: Build project
         run: |
           mkdir -p build
-          g++ -o build/my_project TICTACTOE_Final/*.cpp -l sqlite3 -I include
+          g++ -o build/my_project src/*.cpp -l sqlite3 -I include
 
       - name: Run tests
         run: |
