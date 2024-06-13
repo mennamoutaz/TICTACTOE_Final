@@ -4,13 +4,14 @@
 #include <iostream>
 #include "sqlite3.h"
 #include <cstdint>
-#include <conio.h>
 #include <chrono>
 #include <ctime>
 #include <thread>
 #include <map>
 #include <cstdint>
+#include <conio.h>
 #include "c_time.h"
+
 
 using namespace std;
 
@@ -18,12 +19,11 @@ using namespace std;
 
 std::string timeToString(std::chrono::system_clock::time_point timePoint) {
     std::time_t time = std::chrono::system_clock::to_time_t(timePoint);
-    char buffer[TIME_BUFFER_SIZE];
-    errno_t err = ctime_s(buffer, TIME_BUFFER_SIZE, &time);
+    std::tm timeInfo;
+    localtime_s(&timeInfo, &time);
 
-    if (err != 0) {
-        return "Error converting time.";
-    }
+    char buffer[TIME_BUFFER_SIZE];
+    std::strftime(buffer, TIME_BUFFER_SIZE, "%Y-%m-%d %H:%M:%S", &timeInfo);
 
     return std::string(buffer);
 }

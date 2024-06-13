@@ -4,7 +4,6 @@
 #include <iostream>
 #include "sqlite3.h"
 #include <cstdint>
-#include <conio.h>
 #include <chrono>
 #include <ctime>
 #include <thread>
