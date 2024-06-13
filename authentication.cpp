@@ -13,6 +13,7 @@
 #include "c_time.h"
 #include "authentication.h"
 
+
 using namespace std;
 
 // Function to hash a password using SHA-256
