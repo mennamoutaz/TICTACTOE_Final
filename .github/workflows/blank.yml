@@ -19,7 +19,7 @@ jobs:
       - name: Install g++ and SQLite
         run: |
           choco install mingw
-          choco install sqlite
+          choco install sqlite3
 
       - name: Build project
         run: |
