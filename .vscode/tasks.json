@@ -1,0 +1,46 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",
+                "${workspaceFolder}/ALL/src/authentication.cpp",
+                "${workspaceFolder}/ALL/src/c_time.cpp",
+                "${workspaceFolder}//ALL/src/design.cpp",
+                "${workspaceFolder}ALL/src/game_prep.cpp",
+                "${workspaceFolder}/ALL/src/Source.cpp",
+                "${workspaceFolder}/ALL/src/stats.cpp",
+                "-I${workspaceFolder}/ALL/include",
+                "-o",
+                "${workspaceFolder}/ALL/tictactoe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Generated task to build the entire project"
+        },
+        {
+            "label": "build single file",
+            "type": "shell",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",
+                "-I${workspaceFolder}/TICTACTOE_Final/ALL/include",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Generated task to build a single C++ file"
+        }
+    ]
+}

@@ -9,23 +9,24 @@ on:
       - main
 
 jobs:
-  build-and-test:
-    runs-on: windows-latest
-
+  build:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        os: [windows-latest]
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Install g++ and SQLite
+      - name: Install g++
         run: |
-          choco install mingw
-          choco install sqlite3
+          choco install mingw -y
+          RefreshEnv
 
-      - name: Build project
+      - name: Install SQLite3
         run: |
-          mkdir build
-          g++ -o build/my_project src/*.cpp -lsqlite3 -I include
+          choco install sqlite -y
+          RefreshEnv
 
-      - name: Run tests
-        run: |
-          ./build/my_project
+      - name: Build
+        run: g++ -o tictactoe Source.cpp -lsqlite3
