@@ -2,7 +2,7 @@
 #include <limits>
 #include <string>
 #include <iostream>
-#include "sqlite3.h"
+#include <sqlite3.h>
 #include <cstdint>
 #include <chrono>
 #include <ctime>
@@ -12,6 +12,11 @@
 #include "c_time.h"
 #include "authentication.h"
 
+#ifdef _WIN32
+#include <conio.h>
+#else
+#include <ncurses.h>
+#endif
 
 using namespace std;
 
@@ -37,8 +42,15 @@ string hashPassword(const string& password_to_be_hashed) {
 string getPassword() {
     string pass;
     char ch;
+
+#ifdef _WIN32
     while ((ch = _getch()) != '\r') { // '\r' is the Enter key
-        if (ch == '\b') { // '\b' is the Backspace key
+#else
+    initscr(); // Initialize ncurses
+    noecho();  // Disable echoing of characters
+    while ((ch = getch()) != '\n') { // '\n' is the Enter key
+#endif
+        if (ch == '\b' || ch == 127) { // '\b' is the Backspace key, 127 is the delete key in ncurses
             if (!pass.empty()) {
                 cout << "\b \b"; // Move cursor back, erase character, move cursor back again
                 pass.pop_back(); // Remove last character from password
@@ -49,9 +61,13 @@ string getPassword() {
             cout << '*'; // Display star instead of character
         }
     }
+#ifdef __linux__
+    endwin(); // End ncurses mode
+#endif
     cout << endl; // Move to next line
     return pass;
 }
+
 std::string signup(sqlite3* db) {
     std::string email, name, password, city;
     int age;
@@ -84,6 +100,7 @@ std::string signup(sqlite3* db) {
     std::cout << "Signup successful!" << std::endl;
     return email; // Return the email upon successful signup
 }
+
 std::string login(sqlite3* db) {
     std::string email, password;
     std::cout << "Enter email: ";

@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -10,20 +10,21 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      ncjd
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Install g++
-        run: |
-          choco install mingw -y
-          RefreshEnv
+    - name: Set up Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.15.2' # specify the Qt version
+        modules: qtbase, qtdeclarative # specify required Qt modules
 
-      - name: Install SQLite3
-        run: |
-          choco install sqlite -y
-          RefreshEnv
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y build-essential cmake
 
-      - name: Build
-        run: g++ -o tictactoe Source.cpp -lsqlite3
+    - name: Build project
+      run: |
+        g++ -o myproject Source.cpp
