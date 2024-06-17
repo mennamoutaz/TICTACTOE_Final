@@ -25,4 +25,4 @@ jobs:
         run: ls -al
 
       - name: Compile and Link Project
-        run: g++ -isystem /usr/include/gtest -I. -pthread calctest.cpp calc.cpp -o calctest -lgtest -lgtest_main
+        run: g++ -isystem /usr/include/gtest -I. -pthread Source.cpp -o tictactoe -lgtest -lgtest_main
